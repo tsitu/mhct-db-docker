@@ -1,15 +1,14 @@
 version: '2'
 services:
   mysql:
-    image: bavovanachte/mousehunt-jacksdb
+    image: tsitu/mhct-converter
     ports:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
-      MYSQL_DATABASE: mhhunthelper
+      MYSQL_DATABASE: mhconverter
     dns:
       - 10.32.48.250
       - 10.32.49.250
-

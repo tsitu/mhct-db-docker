@@ -11,14 +11,13 @@ script:
 # Output something every 10 minutes or Travis kills the job-
 - while sleep 9m; do echo "=====[ $SECONDS seconds still running ]====="; done &
 # long-living-command
-- docker build -t mousehunt-jacksdb .
+- docker build -t mhct-converter .
 # Killing background sleep loop
 - kill %1
 - docker images
-- docker tag mousehunt-jacksdb $DOCKER_USERNAME/mousehunt-jacksdb
+- docker tag mhct-converter $DOCKER_USERNAME/mhct-converter
 deploy:
   provider: script
-  script: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && docker push $DOCKER_USERNAME/mousehunt-jacksdb
+  script: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && docker push $DOCKER_USERNAME/mhct-converter
   on:
     branch: master
-
