@@ -20,9 +20,9 @@ RUN curl https://devjacksmith.keybase.pub/mh_backups/weekly/converter_weekly.txt
 
 # TEST LDI
 ADD ./ldi.sh /docker-entrypoint-initdb.d/
-RUN /bin/bash -c mysql -u ${MYSQL_USER} -p ${MYSQL_PASSWORD} LOAD DATA INFILE '/docker-entrypoint-initdb.d/converter_weekly.txt.zip' INTO TABLE testz;
+# RUN /bin/bash -c mysql -u ${MYSQL_USER} -p ${MYSQL_PASSWORD} LOAD DATA INFILE '/docker-entrypoint-initdb.d/converter_weekly.txt.zip' INTO TABLE testz;
 
-# RUN ["/usr/local/bin/docker-entrypoint.sh", "mysqld", "--datadir", "/initialized-db"]
+RUN ["/usr/local/bin/docker-entrypoint.sh", "mysqld", "--datadir", "/initialized-db"]
 
 FROM mysql:5.7
 
