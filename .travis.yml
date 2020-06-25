@@ -17,10 +17,10 @@ script:
   # Killing background sleep loop
   - kill %1
   - docker images
-  - docker tag mhct-db-docker $DOCKER_USERNAME/mhct-db-docker:converter
+  - docker tag mhct-db-docker $DOCKER_USERNAME/mhct-db-docker:ldi-test
   
 deploy:
   provider: script
-  script: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && docker push $DOCKER_USERNAME/mhct-db-docker:converter
+  script: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && docker push $DOCKER_USERNAME/mhct-db-docker:ldi-test
   on:
-    branch: converter
+    branch: ldi-test
