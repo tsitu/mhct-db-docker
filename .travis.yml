@@ -17,10 +17,10 @@ script:
   # Killing background sleep loop
   - kill %1
   - docker images
-  - docker tag mhct-db-docker $DOCKER_USERNAME/mhct-db-docker:hunthelper
+  - docker tag mhct-db-docker $DOCKER_USERNAME/mhct-db-docker:converter
   
 deploy:
   provider: script
-  script: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && docker push $DOCKER_USERNAME/mhct-db-docker:hunthelper
+  script: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD && docker push $DOCKER_USERNAME/mhct-db-docker:converter
   on:
-    branch: hunthelper
+    branch: converter
