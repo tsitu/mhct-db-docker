@@ -7,16 +7,21 @@ RUN ["sed", "-i", "s/exec \"$@\"/echo \"not running $@\"/", "/usr/local/bin/dock
 ENV MYSQL_ROOT_PASSWORD=secret
 ENV MYSQL_USER=admin
 ENV MYSQL_PASSWORD=admin
-ENV MYSQL_DATABASE=mhconverter
+ENV MYSQL_DATABASE=mhhunthelper
 
 RUN apt-get update && apt-get install -y curl && apt-get install -y unzip
 
-# COPY db_file/converter_weekly.txt.zip /docker-entrypoint-initdb.d/
-RUN curl https://devjacksmith.keybase.pub/mh_backups/weekly/converter_weekly.txt.zip?dl=1 -o /docker-entrypoint-initdb.d/converter_weekly.txt.zip
+# Pull and copy DB files to /docker-entrypoint-initdb.d/
+RUN curl https://devjacksmith.keybase.pub/mh_backups/nightly/hunthelper_nightly.txt.zip?dl=1 -o /docker-entrypoint-initdb.d/hunthelper_nightly.txt.zip \
+    && curl https://devjacksmith.keybase.pub/mh_backups/nightly/hunthelper_nightly_ddl.sql.gz?dl=1 -o /docker-entrypoint-initdb.d/hunthelper_nightly_ddl.sql.gz
+
+# LOCAL DEBUG: Add txt and ddl files to save on time/bandwidth
+# ADD ./hunthelper_nightly.txt.zip /docker-entrypoint-initdb.d/
+# ADD ./hunthelper_nightly_ddl.sql.gz /docker-entrypoint-initdb.d/
 
 # Add 'LOAD DATA INFILE' shell script
-ADD ./ldi.sh /docker-entrypoint-initdb.d/
-RUN unzip /docker-entrypoint-initdb.d/converter_weekly.txt.zip -d /docker-entrypoint-initdb.d/
+ADD ./load_data.sh /docker-entrypoint-initdb.d/
+RUN unzip /docker-entrypoint-initdb.d/hunthelper_nightly.txt.zip -d /docker-entrypoint-initdb.d/
 
 # Need to change the datadir to something else that /var/lib/mysql because the parent docker file defines it as a volume.
 # https://docs.docker.com/engine/reference/builder/#volume :
