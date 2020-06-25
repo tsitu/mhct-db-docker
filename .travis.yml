@@ -13,7 +13,7 @@ script:
   # Output something every 10 minutes or Travis kills the job-
   - while sleep 9m; do echo "=====[ $SECONDS seconds still running ]====="; done &
   # long-living-command
-  - docker build -t mhct-db-docker .
+  - time docker build -t mhct-db-docker .
   # Killing background sleep loop
   - kill %1
   - docker images
