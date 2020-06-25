@@ -1,8 +1,13 @@
 #!/bin/bash
 
-/usr/bin/mysqld_safe --skip-grant-tables &
-sleep 5
-
-mysql -u root -p -e "set autocommit=0; set unique_checks=0; set foreign_key_checks=0; set sql_log_bin=0;" -e "load data infile './converter_weekly.txt.zip' into mhconverter; commit;"
-# mysql -u admin -padmin -e "set autocommit=0; set unique_checks=0; set foreign_key_checks=0; set sql_log_bin=0;" -e "load data infile './converter_weekly.txt.zip' into mhconverter; commit;"
-# mysql -u admin -p admin --local_infile=1 -e "USE testz" -e "LOAD DATA INFILE 'converter_weekly.txt.zip'"
+# -e "set sql_log_bin=0;" [requires super privilege]
+mysql -u admin -padmin mhconverter \
+ -e "CREATE TABLE items ( \
+    id int(10) unsigned NOT NULL, \
+    name varchar(255) NOT NULL, \
+    PRIMARY KEY (id), \
+    UNIQUE KEY name (name) \
+  ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;" \
+ -e "SET autocommit=0; SET unique_checks=0; SET foreign_key_checks=0;" \
+ -e "LOAD DATA LOCAL INFILE '/docker-entrypoint-initdb.d/items.txt' INTO TABLE items;" \
+ -e "commit;"
