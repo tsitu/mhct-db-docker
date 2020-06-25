@@ -7,11 +7,11 @@ RUN ["sed", "-i", "s/exec \"$@\"/echo \"not running $@\"/", "/usr/local/bin/dock
 ENV MYSQL_ROOT_PASSWORD=secret
 ENV MYSQL_USER=admin
 ENV MYSQL_PASSWORD=admin
-ENV MYSQL_DATABASE=mhconverter
+ENV MYSQL_DATABASE=mhhunthelper
 
-# COPY db_file/converter_weekly.sql.gz /docker-entrypoint-initdb.d/
-RUN apt-get update && apt-get install -y wget
-RUN wget https://devjacksmith.keybase.pub/mh_backups/weekly/converter_weekly.sql.gz?dl=1 -O /docker-entrypoint-initdb.d/converter_weekly.sql.gz
+# COPY db_file/hunthelper_nightly.sql.gz /docker-entrypoint-initdb.d/
+RUN apt-get update && apt-get install -y curl
+RUN curl https://devjacksmith.keybase.pub/mh_backups/nightly/hunthelper_nightly.sql.gz?dl=1 -o /docker-entrypoint-initdb.d/hunthelper_nightly.sql.gz
 
 # Need to change the datadir to something else that /var/lib/mysql because the parent docker file defines it as a volume.
 # https://docs.docker.com/engine/reference/builder/#volume :
