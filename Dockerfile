@@ -11,7 +11,7 @@ ENV MYSQL_DATABASE=mhconverter
 
 # Setup
 RUN apt-get update && apt-get install -y curl
-RUN mysql -u root -psecret -e "SET GLOBAL innodb_buffer_pool_size=1073741824;"
+ADD ./_preload.sh /docker-entrypoint-initdb.d/
 
 # COPY DB file to /docker-entrypoint-initdb.d/
 RUN curl https://devjacksmith.keybase.pub/mh_backups/weekly/converter_weekly.sql.gz?dl=1 -o /docker-entrypoint-initdb.d/converter_weekly.sql.gz
