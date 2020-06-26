@@ -11,8 +11,7 @@ ENV MYSQL_DATABASE=mhhunthelper
 
 # COPY db files to /docker-entrypoint-initdb.d/
 RUN apt-get update && apt-get install -y curl
-RUN curl https://devjacksmith.keybase.pub/mh_backups/nightly/hunthelper_nightly.sql.gz?dl=1 -o /docker-entrypoint-initdb.d/hunthelper_nightly.sql.gz \
-    && curl https://devjacksmith.keybase.pub/mh_backups/weekly/converter_weekly.sql.gz?dl=1 -o /docker-entrypoint-initdb.d/converter_weekly.sql.gz
+RUN curl https://devjacksmith.keybase.pub/mh_backups/nightly/hunthelper_nightly.sql.gz?dl=1 -o /docker-entrypoint-initdb.d/hunthelper_nightly.sql.gz
 
 # Need to change the datadir to something else that /var/lib/mysql because the parent docker file defines it as a volume.
 # https://docs.docker.com/engine/reference/builder/#volume :
