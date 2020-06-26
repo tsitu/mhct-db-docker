@@ -3,6 +3,15 @@ sudo: required
 services:
   - docker
 
+before_install:
+  if ! [ -f ./hunthelper_nightly.txt.zip ]; then
+    curl https://devjacksmith.keybase.pub/mh_backups/nightly/hunthelper_nightly.txt.zip?dl=1 -o ./hunthelper_nightly.txt.zip
+  fi
+
+cache:
+  directories:
+    - $TRAVIS_BUILD_DIR/
+
 env:
   global:
     # - secure: jPUv9fKp44T75yzLWSa8gzYO6MHO+7rpMjaniqgMUZGUgApiTbDUYBRRON1AN89G+1pvzpQhufCScaasqF0DSP4RBTRci+XL5qO2HwMdosPojhDw/nCeciYHH0Kj955txJk9rMixYsgDH7YbGBuo8Wf9wCybmyE7FkpbmmNfa3pAPj1iNgk0t+DJan/BS6e4hMkuq+WGuN8jEbp4zqhoFwfREGk7iEsLxLPCShES0e/DSh6rpjVXKn6MfkniWPCdnpefNk/4y//k/zYMxaBf2W5Vg8uT1GeVQ3yZi8pvZYxnYfkZy4nCkW/k3zT7JoOyhm1a344S0V1VdlyusbwKMiX1T5RNqW4bIbNT8kno9rZ3mM2B3UH7eE67qDax03dO5qNXopoMdhG2yr3AgsXEfQxFG6QwAk6grZt4Ztz8R67YGvQXc0bOTkYqPU5xusLGp7B+Wh4/vcQZjNAaebwIjjJ2kde3MIceT8qnFvOQvzAXehWcmOT8xhlYJmxSJA4vxqxspPUw+PmLCzaZIW4mssVzfMxWgsNeYyuf6/y6s8TrJVeqTQErm/TCt7KUT8lzKyY5zKEF+IEiNClatGgSpuCpOy0HseVPEEBx9xjt7GiXy5eqgULIgpKZbWGqs4CvH/ICCwUo3fdB13AZnqf9pEMtC5Yy/qB1gpvAT3pWtlQ=

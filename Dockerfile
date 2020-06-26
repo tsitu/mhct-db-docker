@@ -12,12 +12,13 @@ ENV MYSQL_DATABASE=mhhunthelper
 RUN apt-get update && apt-get install -y curl && apt-get install -y unzip
 
 # Pull and copy DB files to /docker-entrypoint-initdb.d/
-RUN curl https://devjacksmith.keybase.pub/mh_backups/nightly/hunthelper_nightly.txt.zip?dl=1 -o /docker-entrypoint-initdb.d/hunthelper_nightly.txt.zip \
-    && curl https://devjacksmith.keybase.pub/mh_backups/nightly/hunthelper_nightly_ddl.sql.gz?dl=1 -o /docker-entrypoint-initdb.d/hunthelper_nightly_ddl.sql.gz
+# RUN curl https://devjacksmith.keybase.pub/mh_backups/nightly/hunthelper_nightly.txt.zip?dl=1 -o /docker-entrypoint-initdb.d/hunthelper_nightly.txt.zip \
+    # && curl https://devjacksmith.keybase.pub/mh_backups/nightly/hunthelper_nightly_ddl.sql.gz?dl=1 -o /docker-entrypoint-initdb.d/hunthelper_nightly_ddl.sql.gz
 
 # LOCAL DEBUG: Add txt and ddl files to save on time/bandwidth
 # ADD ./hunthelper_nightly.txt.zip /docker-entrypoint-initdb.d/
-# ADD ./hunthelper_nightly_ddl.sql.gz /docker-entrypoint-initdb.d/
+ADD ./hunthelper_nightly_ddl.sql /docker-entrypoint-initdb.d/
+COPY ./hunthelper_nightly.txt.zip /docker-entrypoint-initdb.d/
 
 # Add 'LOAD DATA INFILE' shell script
 ADD ./load_data.sh /docker-entrypoint-initdb.d/
