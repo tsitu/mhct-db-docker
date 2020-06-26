@@ -3,7 +3,7 @@ sudo: required
 services:
   - docker
 
-before_install:
+before_install: |
   if ! [ -f ./hunthelper_nightly.txt.zip ]; then
     curl https://devjacksmith.keybase.pub/mh_backups/nightly/hunthelper_nightly.txt.zip?dl=1 -o ./hunthelper_nightly.txt.zip
   fi
