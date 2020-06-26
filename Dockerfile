@@ -1,23 +1,20 @@
 FROM mysql:5.7 as builder
 
-# That file does the DB initialization but also runs mysql daemon, by removing the last line it will only init
+# Entrypoint does DB initialization but also runs MySQL daemon, by removing the last line it will only init
 RUN ["sed", "-i", "s/exec \"$@\"/echo \"not running $@\"/", "/usr/local/bin/docker-entrypoint.sh"]
 
-# needed for intialization
+# Initialization
 ENV MYSQL_ROOT_PASSWORD=secret
 ENV MYSQL_USER=admin
 ENV MYSQL_PASSWORD=admin
 ENV MYSQL_DATABASE=mhconverter
 
-RUN apt-get update && apt-get install -y curl && apt-get install -y unzip
+# Setup
+RUN apt-get update && apt-get install -y curl
+RUN mysql -u root -psecret -e "SET GLOBAL innodb_buffer_pool_size=1073741824;"
 
-# COPY db_file/converter_weekly.txt.zip /docker-entrypoint-initdb.d/
-RUN curl https://devjacksmith.keybase.pub/mh_backups/weekly/converter_weekly.txt.zip?dl=1 -o /docker-entrypoint-initdb.d/converter_weekly.txt.zip \
-    && curl https://devjacksmith.keybase.pub/mh_backups/weekly/converter_weekly_ddl.sql.gz?dl=1 -o /docker-entrypoint-initdb.d/converter_weekly_ddl.sql.gz
-
-# Add 'LOAD DATA INFILE' shell script
-ADD ./load_data.sh /docker-entrypoint-initdb.d/
-RUN unzip /docker-entrypoint-initdb.d/converter_weekly.txt.zip -d /docker-entrypoint-initdb.d/
+# COPY DB file to /docker-entrypoint-initdb.d/
+RUN curl https://devjacksmith.keybase.pub/mh_backups/weekly/converter_weekly.sql.gz?dl=1 -o /docker-entrypoint-initdb.d/converter_weekly.sql.gz
 
 # Need to change the datadir to something else that /var/lib/mysql because the parent docker file defines it as a volume.
 # https://docs.docker.com/engine/reference/builder/#volume :
