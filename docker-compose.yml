@@ -8,7 +8,7 @@ services:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
-      MYSQL_DATABASE: mhconverter
+      MYSQL_DATABASE: mhhunthelper
     dns:
       - 10.32.48.250
       - 10.32.49.250
