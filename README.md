@@ -24,6 +24,19 @@ This should set up a server that you can query on `localhost:3306`.
 
 *Note:* Replace `localhost` with `docker-machine ip` if you are using Docker Toolbox (most common IP is `192.168.99.100`)
 
+## Running Multiple Databases At Once
+
+If you want to start all (or most) of the databases and connect to them from an external tool you can use something like:
+
+```
+$ docker run -p 3306:3306 -d --name mhct-mhhunthelper tsitu/mhct-db-docker:latest
+$ docker run -p 3307:3306 -d --name mhct-converter tsitu/mhct-db-docker:converter
+$ docker run -p 3308:3306 -d --name mhct-maphelper tsitu/mhct-db-docker:maphelper
+$ docker run -p 3309:3306 -d --name mhct-mapspotter tsitu/mhct-db-docker:mapspotter
+```
+
+MySQL's default port is 3306. You will need to use the first number after the `-p` (3306, 3307, 3308, or 3309) to connect to the database you want.
+
 ## Credentials
 
 ```bash
