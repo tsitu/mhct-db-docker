@@ -9,7 +9,6 @@ Based on [Bavo's repo](https://github.com/bavovanachte/jacks-tools-docker).
 - tsitu/mhct-db-docker:latest       # NIGHTLY 'mhhunthelper' dump
 - tsitu/mhct-db-docker:weekly       # WEEKLY  'mhhunthelper' dump
 - tsitu/mhct-db-docker:converter    # WEEKLY  'mhconverter'  dump
-- tsitu/mhct-db-docker:maphelper    # WEEKLY  'mhmaphelper'  dump
 - tsitu/mhct-db-docker:mapspotter   # WEEKLY  'mhmapspotter' dump
 ```
 
@@ -31,7 +30,6 @@ If you want to start all (or most) of the databases and connect to them from an 
 ```
 $ docker run -p 3306:3306 -d --name mhct-mhhunthelper tsitu/mhct-db-docker:latest
 $ docker run -p 3307:3306 -d --name mhct-converter tsitu/mhct-db-docker:converter
-$ docker run -p 3308:3306 -d --name mhct-maphelper tsitu/mhct-db-docker:maphelper
 $ docker run -p 3309:3306 -d --name mhct-mapspotter tsitu/mhct-db-docker:mapspotter
 ```
 
@@ -47,8 +45,6 @@ ENV MYSQL_PASSWORD=admin
 ENV MYSQL_DATABASE=mhhunthelper  # for 'latest' and 'weekly' image tags
 # OR
 ENV MYSQL_DATABASE=mhconverter   # for 'converter' image tag
-# OR
-ENV MYSQL_DATABASE=mhmaphelper   # for 'maphelper' image tag
 # OR
 ENV MYSQL_DATABASE=mhmapspotter  # for 'mapspotter' image tag
 ```
